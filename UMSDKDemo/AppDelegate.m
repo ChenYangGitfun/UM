@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
+#import <UMShare/UMShare.h>
+#import "UMSocialWechatHandler.h"
+//#import "UMSocialSnsService.h"
+@interface AppDelegate ()<UMSocialPlatformProvider>
 
 @end
 
@@ -16,6 +18,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[UMSocialManager defaultManager] setUmSocialAppkey:@"598950cccae7e74a26000af7"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx35c6c77293983275" appSecret:@"80d9d4026fe15d63245f44819b3fe315" redirectURL:@"http://mobile.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"422329659" appSecret:@"9007247bb61dea16caaf390247a83bdc" redirectURL:@"http://www.weibo.com"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1106240051" appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -47,5 +54,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  
+    
+    return [[UMSocialManager defaultManager]handleOpenURL:url] ;
+    
+}
 @end
